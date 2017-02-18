@@ -27,6 +27,16 @@
         self.finishedLines = [[NSMutableArray alloc] init];
         self.backgroundColor = [UIColor grayColor];
         self.multipleTouchEnabled = YES;
+        
+        NSArray *plist = [NSArray arrayWithContentsOfFile:BNRDocPath()];
+        if (plist) {
+            self.finishedLines = [plist mutableCopy];
+        } else {
+            // There is no dataset; create an empty array
+            self.finishedLines = [NSMutableArray array];
+        }
+        
+        NSLog(@"%@", self.finishedLines);
     }
     
     return self;
@@ -41,6 +51,9 @@
     [bp moveToPoint:line.begin];
     [bp addLineToPoint:line.end];
     [bp stroke];
+    
+    [self.finishedLines writeToFile:BNRDocPath() atomically:YES];
+
 }
 
 - (void)drawRect:(CGRect)rect
@@ -54,12 +67,11 @@
     for (NSValue *key in self.linesInProgress) {
         [self strokeLine:self.linesInProgress[key]];
     }
-    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+//    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     for (UITouch *t in touches) {
         CGPoint location = [t locationInView:self];
@@ -77,7 +89,7 @@
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+//    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     for (UITouch *t in touches) {
         NSValue *key = [NSValue valueWithNonretainedObject:t];
@@ -92,7 +104,7 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+//    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     for (UITouch *t in touches) {
         NSValue *key = [NSValue valueWithNonretainedObject:t];
@@ -107,15 +119,21 @@
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+//    NSLog(@"%@", NSStringFromSelector(_cmd));
     
     for (UITouch *t in touches) {
         NSValue *key = [NSValue valueWithNonretainedObject:t];
         [self.linesInProgress removeObjectForKey:key];
     }
-    
     [self setNeedsDisplay];
 }
+
+NSString *BNRDocPath()
+{
+    NSArray *pathList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    return [pathList[0] stringByAppendingPathComponent:@"data.td"];
+}
+
 
 
 @end
