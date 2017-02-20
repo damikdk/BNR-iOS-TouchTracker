@@ -27,16 +27,6 @@
         self.finishedLines = [[NSMutableArray alloc] init];
         self.backgroundColor = [UIColor grayColor];
         self.multipleTouchEnabled = YES;
-        
-        NSArray *plist = [NSArray arrayWithContentsOfFile:BNRDocPath()];
-        if (plist) {
-            self.finishedLines = [plist mutableCopy];
-        } else {
-            // There is no dataset; create an empty array
-            self.finishedLines = [NSMutableArray array];
-        }
-        
-        NSLog(@"%@", self.finishedLines);
     }
     
     return self;
@@ -51,9 +41,6 @@
     [bp moveToPoint:line.begin];
     [bp addLineToPoint:line.end];
     [bp stroke];
-    
-    [self.finishedLines writeToFile:BNRDocPath() atomically:YES];
-
 }
 
 - (void)drawRect:(CGRect)rect
@@ -127,13 +114,5 @@
     }
     [self setNeedsDisplay];
 }
-
-NSString *BNRDocPath()
-{
-    NSArray *pathList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    return [pathList[0] stringByAppendingPathComponent:@"data.td"];
-}
-
-
 
 @end
