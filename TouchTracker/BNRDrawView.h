@@ -11,4 +11,6 @@
 
 @interface BNRDrawView : UIView
 
+@property (nonatomic, strong) NSMutableArray *finishedLines;
+
 @end

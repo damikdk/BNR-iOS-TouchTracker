@@ -10,4 +10,18 @@
 
 @implementation BNRLine
 
+- (instancetype)initWithCoder:(NSCoder *)decoder
+{
+    if (self = [super init]) {
+        self.begin = [decoder decodeCGPointForKey:@"begin"];
+        self.end = [decoder decodeCGPointForKey:@"end"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeCGPoint:self.begin forKey:@"begin"];
+    [encoder encodeCGPoint:self.end forKey:@"end"];
+}
+
 @end

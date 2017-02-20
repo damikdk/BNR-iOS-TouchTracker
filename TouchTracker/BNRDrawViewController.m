@@ -11,9 +11,25 @@
 
 @implementation BNRDrawViewController
 
-- (void)loadView
+- (void)viewDidAppear:(BOOL)animated
 {
-    self.view = [[BNRDrawView alloc] initWithFrame:CGRectZero];
+    BNRDrawView *drawView = [[BNRDrawView alloc] initWithFrame:CGRectZero];
+
+    NSData *linesData = [[NSUserDefaults standardUserDefaults] objectForKey:@"lines"];
+    NSMutableArray *lines = [NSKeyedUnarchiver unarchiveObjectWithData:linesData];
+    
+    if (lines){
+        drawView.finishedLines = lines;
+    }
+    
+    self.view = drawView;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    BNRDrawView *drawView = (BNRDrawView *)self.view;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:drawView.finishedLines];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"lines"];
 }
 
 @end
