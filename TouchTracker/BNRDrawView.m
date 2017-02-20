@@ -45,8 +45,14 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    [[UIColor blackColor] set];
     for (BNRLine *line in self.finishedLines) {
+        
+        if ([self pointPairToBearingDegrees:line.begin secondPoint:line.end] > 45) {
+            [[UIColor whiteColor] set];
+        } else {
+            [[UIColor greenColor] set];
+        }
+        
         [self strokeLine:line];
     }
     
@@ -113,6 +119,17 @@
         [self.linesInProgress removeObjectForKey:key];
     }
     [self setNeedsDisplay];
+}
+
+
+- (CGFloat)pointPairToBearingDegrees:(CGPoint)startingPoint secondPoint:(CGPoint)endingPoint
+{
+    CGPoint originPoint = CGPointMake(endingPoint.x - startingPoint.x, endingPoint.y - startingPoint.y); // get origin point to origin by subtracting end from start
+    float bearingRadians = atan2f(originPoint.y, originPoint.x); // get bearing in radians
+    float bearingDegrees = bearingRadians * (180.0 / M_PI); // convert to degrees
+    bearingDegrees = (bearingDegrees > 0.0 ? bearingDegrees : (360.0 + bearingDegrees)); // correct discontinuity
+    
+    return bearingDegrees;
 }
 
 @end
