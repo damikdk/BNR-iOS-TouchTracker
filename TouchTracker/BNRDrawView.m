@@ -92,16 +92,17 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
 //    NSLog(@"%@", NSStringFromSelector(_cmd));
-    
-    for (UITouch *t in touches) {
-        CGPoint location = [t locationInView:self];
+    if (!self.selectedLine) {
+        for (UITouch *t in touches) {
+            CGPoint location = [t locationInView:self];
         
-        BNRLine *line = [[BNRLine alloc] init];
-        line.begin = location;
-        line.end = location;
+            BNRLine *line = [[BNRLine alloc] init];
+            line.begin = location;
+            line.end = location;
         
-        NSValue *key = [NSValue valueWithNonretainedObject:t];
-        self.linesInProgress[key] = line;
+            NSValue *key = [NSValue valueWithNonretainedObject:t];
+            self.linesInProgress[key] = line;
+        }
     }
     
     [self setNeedsDisplay];
@@ -110,29 +111,31 @@
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
 //    NSLog(@"%@", NSStringFromSelector(_cmd));
-    
-    for (UITouch *t in touches) {
-        NSValue *key = [NSValue valueWithNonretainedObject:t];
-        BNRLine *line = self.linesInProgress[key];
+    if (!self.selectedLine) {
+
+        for (UITouch *t in touches) {
+            NSValue *key = [NSValue valueWithNonretainedObject:t];
+            BNRLine *line = self.linesInProgress[key];
         
-        line.end = [t locationInView:self];
+            line.end = [t locationInView:self];
+        }
     }
-    
     [self setNeedsDisplay];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
 //    NSLog(@"%@", NSStringFromSelector(_cmd));
-    
-    for (UITouch *t in touches) {
-        NSValue *key = [NSValue valueWithNonretainedObject:t];
-        BNRLine *line = self.linesInProgress[key];
+    if (!self.selectedLine) {
+
+        for (UITouch *t in touches) {
+            NSValue *key = [NSValue valueWithNonretainedObject:t];
+            BNRLine *line = self.linesInProgress[key];
         
-        [self.finishedLines addObject:line];
-        [self.linesInProgress removeObjectForKey:key];
+            [self.finishedLines addObject:line];
+            [self.linesInProgress removeObjectForKey:key];
+        }
     }
-    
     [self setNeedsDisplay];
 }
 
@@ -224,7 +227,6 @@
             }
         }
     }
-    
     return nil;
 }
 
@@ -259,7 +261,6 @@
         
         [gr setTranslation:CGPointZero inView:self];
     }
-    
 }
 
 @end
