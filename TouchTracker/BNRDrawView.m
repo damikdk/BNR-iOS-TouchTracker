@@ -61,7 +61,7 @@
 - (void)strokeLine:(BNRLine *)line
 {
     UIBezierPath *bp = [UIBezierPath bezierPath];
-    bp.lineWidth = 10;
+    bp.lineWidth = line.width;
     bp.lineCapStyle = kCGLineCapRound;
     
     [bp moveToPoint:line.begin];
@@ -116,6 +116,11 @@
         BNRLine *line = self.linesInProgress[key];
         
         line.end = [t locationInView:self];
+        
+        CGPoint velocity = [self.moveRecognizer velocityInView:self];
+        CGFloat magnitude = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
+        
+        line.width = magnitude/100;
     }
     
     [self setNeedsDisplay];
