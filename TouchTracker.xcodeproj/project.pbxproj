@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84CDAF641E5F563F00937D23 /* BNRColorSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CDAF631E5F563F00937D23 /* BNRColorSwitcherView.m */; };
 		84F6FE8A1E5743AA00DF8BEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F6FE891E5743AA00DF8BEC /* main.m */; };
 		84F6FE8D1E5743AA00DF8BEC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F6FE8C1E5743AA00DF8BEC /* AppDelegate.m */; };
 		84F6FE951E5743AA00DF8BEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F6FE941E5743AA00DF8BEC /* Assets.xcassets */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84CDAF621E5F563F00937D23 /* BNRColorSwitcherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRColorSwitcherView.h; sourceTree = "<group>"; };
+		84CDAF631E5F563F00937D23 /* BNRColorSwitcherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRColorSwitcherView.m; sourceTree = "<group>"; };
 		84F6FE851E5743AA00DF8BEC /* TouchTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F6FE891E5743AA00DF8BEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		84F6FE8B1E5743AA00DF8BEC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -105,6 +108,8 @@
 		84F6FE871E5743AA00DF8BEC /* TouchTracker */ = {
 			isa = PBXGroup;
 			children = (
+				84CDAF621E5F563F00937D23 /* BNRColorSwitcherView.h */,
+				84CDAF631E5F563F00937D23 /* BNRColorSwitcherView.m */,
 				84F6FEC41E57455300DF8BEC /* BNRDrawViewController.h */,
 				84F6FEC51E57455300DF8BEC /* BNRDrawViewController.m */,
 				84F6FEC11E5744EB00DF8BEC /* BNRDrawView.h */,
@@ -287,6 +292,7 @@
 				84F6FEC01E57446F00DF8BEC /* BNRLine.m in Sources */,
 				84F6FE8A1E5743AA00DF8BEC /* main.m in Sources */,
 				84F6FEC31E5744EB00DF8BEC /* BNRDrawView.m in Sources */,
+				84CDAF641E5F563F00937D23 /* BNRColorSwitcherView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

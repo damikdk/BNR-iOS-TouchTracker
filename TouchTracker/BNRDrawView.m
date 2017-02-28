@@ -52,6 +52,8 @@
         self.moveRecognizer.delegate = self;
         self.moveRecognizer.cancelsTouchesInView = NO;
         
+        self.colorOfLines = [UIColor whiteColor];
+        
         [self addGestureRecognizer:self.moveRecognizer];
     }
     
@@ -61,7 +63,7 @@
 - (void)strokeLine:(BNRLine *)line
 {
     UIBezierPath *bp = [UIBezierPath bezierPath];
-    bp.lineWidth = 10;
+    bp.lineWidth = 7;
     bp.lineCapStyle = kCGLineCapRound;
     
     [bp moveToPoint:line.begin];
@@ -71,13 +73,13 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    [[UIColor blackColor] set];
     for (BNRLine *line in self.finishedLines) {
+        [line.color set];
         [self strokeLine:line];
     }
     
-    [[UIColor redColor] set];
     for (NSValue *key in self.linesInProgress) {
+        [_colorOfLines set];
         [self strokeLine:self.linesInProgress[key]];
     }
     
@@ -128,6 +130,7 @@
     for (UITouch *t in touches) {
         NSValue *key = [NSValue valueWithNonretainedObject:t];
         BNRLine *line = self.linesInProgress[key];
+        line.color = _colorOfLines;
         
         [self.finishedLines addObject:line];
         [self.linesInProgress removeObjectForKey:key];
@@ -178,6 +181,10 @@
         [menu setMenuVisible:YES animated:YES];
     } else {
         [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
+    }
+    
+    if (self.subviews.count >= 1) {
+        [self.subviews[0] removeFromSuperview];
     }
     
     [self setNeedsDisplay];
@@ -259,7 +266,7 @@
         
         [gr setTranslation:CGPointZero inView:self];
     }
-    
 }
+
 
 @end

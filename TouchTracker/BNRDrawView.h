@@ -11,4 +11,6 @@
 
 @interface BNRDrawView : UIView
 
+@property (nonatomic) UIColor *colorOfLines;
+
 @end
